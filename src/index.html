@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simulador MRU</title>
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="control-panel">
+        <div class="panel-header">
+          <p class="eyebrow">Proyecto ABP</p>
+          <h1>MRU</h1>
+        </div>
+
+        <div class="field-group">
+          <label for="movementMode">Tipo de movimiento</label>
+          <div class="select-wrapper">
+            <select id="movementMode">
+              <option value="mru">MRU</option>
+              <option value="mrua">MRUA</option>
+              <option value="freefall">Caída Libre</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field-group" id="horizontalPositionField">
+          <label id="positionInputLabel" for="initialPosition">Posición inicial (x₀)</label>
+          <div class="input-with-unit">
+            <input id="initialPosition" type="number" value="0" step="0.1" min="-100" max="100" />
+            <span>m</span>
+          </div>
+        </div>
+
+        <div class="field-group" id="freeFallHeightField" hidden>
+          <label for="initialHeight">Altura inicial (y₀)</label>
+          <div class="input-with-unit">
+            <input id="initialHeight" type="number" value="20" step="0.1" min="0" max="1000" />
+            <span>m</span>
+          </div>
+        </div>
+
+        <div class="field-group" id="horizontalVelocityField">
+          <label id="velocityInputLabel" for="velocity">Velocidad (v)</label>
+          <div class="input-with-unit velocity-unit-group">
+            <input id="velocity" type="number" value="7.2" step="0.1" min="-200" max="200" />
+            <select id="velocityUnit" aria-label="Unidad de velocidad">
+              <option value="mps">m/s</option>
+              <option value="kmh">km/h</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field-group" id="freeFallVelocityField" hidden>
+          <label for="initialVerticalVelocity">Velocidad inicial vertical (v₀)</label>
+          <div class="input-with-unit">
+            <input id="initialVerticalVelocity" type="number" value="0" step="0.1" min="-200" max="200" />
+            <span>m/s</span>
+          </div>
+        </div>
+
+        <div class="field-group" id="accelerationField" hidden>
+          <label for="acceleration">Aceleración (a)</label>
+          <div class="input-with-unit">
+            <input id="acceleration" type="number" value="0" step="0.1" min="-20" max="20" disabled />
+            <span>m/s²</span>
+          </div>
+        </div>
+
+        <div class="field-group" id="gravityField" hidden>
+          <label for="gravity">Gravedad (g)</label>
+          <div class="input-with-unit">
+            <input id="gravity" type="number" value="9.8" readonly />
+            <span>m/s²</span>
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label for="vehicleSelect">Objeto</label>
+          <div class="select-wrapper">
+            <select id="vehicleSelect">
+              <option value="car">Carro (🚗)</option>
+              <option value="motorcycle">Moto (🏍️)</option>
+              <option value="bicycle">Bicicleta (🚲)</option>
+              <option value="plane">Avión (✈️)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="button-group">
+          <button id="startBtn" class="primary" type="button">Iniciar</button>
+          <button id="pauseBtn" class="secondary" type="button">Pausar</button>
+          <button id="resetBtn" class="ghost" type="button">Reiniciar</button>
+        </div>
+      </aside>
+
+      <main class="simulator-panel">
+        <div class="simulator-header">
+          <div>
+            <p class="eyebrow">Visualización</p>
+            <h2 id="motionTitle">Movimiento rectilíneo uniforme</h2>
+          </div>
+        </div>
+
+        <div class="canvas-card">
+          <canvas id="simCanvas" width="900" height="420" aria-label="Simulador de movimiento"></canvas>
+        </div>
+
+        <div class="metrics-panel">
+          <div class="metric-card">
+            <span class="label">Tiempo transcurrido</span>
+            <strong id="timeValue">0.00 s</strong>
+          </div>
+
+          <div class="metric-card">
+            <span class="label" id="positionMetricLabel">Posición actual</span>
+            <strong id="positionValue">0.00 m</strong>
+          </div>
+
+          <div class="metric-card">
+            <span class="label">Velocidad actual</span>
+            <strong id="currentVelocityValue">0.00 m/s</strong>
+          </div>
+
+          <div class="metric-card" id="accelerationMetric">
+            <span class="label" id="accelerationMetricLabel">Aceleración</span>
+            <strong id="accelerationValue">0.00 m/s²</strong>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script src="js/physics.js"></script>
+    <script src="js/simulator.js"></script>
+  </body>
+</html>
